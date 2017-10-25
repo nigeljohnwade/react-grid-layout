@@ -24,5 +24,16 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Grid layout demo'
         }),
-    ]
+    ],
+    module: {
+        rules:[
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: true,
+                }
+            }
+       ]
+}
 };
