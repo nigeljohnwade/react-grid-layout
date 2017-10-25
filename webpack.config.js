@@ -22,7 +22,8 @@ module.exports = {
     },
     plugins:[
         new HtmlWebpackPlugin({
-            title: 'Grid layout demo'
+            title: 'Grid layout demo',
+            template: 'src/index.html'
         }),
     ],
     module: {
