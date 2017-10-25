@@ -7,6 +7,12 @@ const PATHS = {
 };
 
 module.exports = {
+    devServer:{
+        historyApiFallback: true,
+        stats: 'errors-only',
+        host: process.env.HOST,
+        port: process.env.PORT,
+    },
     entry: {
         app: PATHS.app,
     },
