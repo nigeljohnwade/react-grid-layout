@@ -159,51 +159,6 @@ export class MyGridExistingContent extends React.Component {
 
 export class MyResponsiveGridExistingContent extends React.Component {
 
-    componentWillMount() {
-        if (localStorage.getItem('layouts')) {
-            this.layouts = JSON.parse(localStorage.getItem('layouts'));
-        } else {
-            this.layouts = {
-                lg: [
-                    { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
-                    { i: 'b', x: 6, y: 0, w: 6, h: 3, static: true },
-                    { i: 'c', x: 0, y: 3, w: 4, h: 2, minH: 1, maxH: 3},
-                    { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                    { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                ],
-                md: [
-                    { i: 'a', x: 0, y: 0, w: 5, h: 3, minW: 2, maxW: 6 },
-                    { i: 'b', x: 5, y: 0, w: 5, h: 3, static: true },
-                    { i: 'c', x: 0, y: 3, w: 3, h: 2, minH: 1, maxH: 3 },
-                    { i: 'd', x: 3, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                    { i: 'e', x: 7, y: 3, w: 3, h: 2, minH: 1, maxH: 3 },
-                ],
-                sm: [
-                    { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
-                    { i: 'b', x: 0, y: 1, w: 6, h: 3, static: true },
-                    { i: 'c', x: 0, y: 3, w: 2, h: 2, minH: 1, maxH: 3 },
-                    { i: 'd', x: 2, y: 3, w: 2, h: 2, minH: 1, maxH: 3 },
-                    { i: 'e', x: 4, y: 3, w: 2, h: 2, minH: 1, maxH: 3 },
-                ],
-                xs: [
-                    { i: 'a', x: 0, y: 0, w: 4, h: 3, minW: 2, maxW: 6, isDraggable: false },
-                    { i: 'b', x: 6, y: 0, w: 4, h: 3, static: true },
-                    { i: 'c', x: 0, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                    { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                    { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                ],
-                xxs: [
-                    { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
-                    { i: 'b', x: 6, y: 0, w: 6, h: 3, static: true },
-                    { i: 'c', x: 0, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                    { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                    { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
-                ],
-            };
-        }
-        localStorage.setItem('layouts', JSON.stringify(this.layouts));
-    }
-
     onBreakpointChange(newBreakpoint, newCols){
         console.log(newBreakpoint, newCols);
     }
@@ -238,15 +193,15 @@ export class MyResponsiveGridExistingContent extends React.Component {
         console.log(layout, oldItem, newItem, placeholder, event, element);
     }
     render() {
-        const layouts = this.layouts;
+        const {layouts, cols, breakpoints} = this.props;
         return (
             <div>
                 <h2>RGL with layout as psuedo-prop and actual content</h2>
                 <ResponsiveReactGridLayout
                     className="layout"
                     layouts={layouts}
-                    breakpoints={{ lg: 940, md: 736, sm: 508, xs: 220, xxs: 0 }}
-                    cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                    breakpoints={breakpoints}
+                    cols={cols}
                     margin={[10, 10]}
                     containerPadding={[10, 10]}
                     rowHeight={100}
@@ -309,9 +264,51 @@ export class MyResponsiveGridExistingContent extends React.Component {
         )
     }
 }
-
+const layouts = {
+    lg: [
+        { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
+        { i: 'b', x: 6, y: 0, w: 6, h: 3, static: true },
+        { i: 'c', x: 0, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+    ],
+    md: [
+        { i: 'a', x: 0, y: 0, w: 5, h: 3, minW: 2, maxW: 6 },
+        { i: 'b', x: 5, y: 0, w: 5, h: 3, static: true },
+        { i: 'c', x: 0, y: 3, w: 3, h: 2, minH: 1, maxH: 3 },
+        { i: 'd', x: 3, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'e', x: 7, y: 3, w: 3, h: 2, minH: 1, maxH: 3 },
+    ],
+    sm: [
+        { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
+        { i: 'b', x: 0, y: 1, w: 6, h: 3, static: true },
+        { i: 'c', x: 0, y: 3, w: 2, h: 2, minH: 1, maxH: 3 },
+        { i: 'd', x: 2, y: 3, w: 2, h: 2, minH: 1, maxH: 3 },
+        { i: 'e', x: 4, y: 3, w: 2, h: 2, minH: 1, maxH: 3 },
+    ],
+    xs: [
+        { i: 'a', x: 0, y: 0, w: 4, h: 3, minW: 2, maxW: 6, isDraggable: false },
+        { i: 'b', x: 6, y: 0, w: 4, h: 3, static: true },
+        { i: 'c', x: 0, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+    ],
+    xxs: [
+        { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
+        { i: 'b', x: 6, y: 0, w: 6, h: 3, static: true },
+        { i: 'c', x: 0, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+        { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
+    ],
+}
+const breakpoints = { lg: 940, md: 736, sm: 508, xs: 220, xxs: 0 };
+const cols = { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 };
 //ReactDOM.render(<MyGridConfig />, document.getElementById('gridConfig'));
 //ReactDOM.render(<MyGridInline />, document.getElementById('gridInline'));
 //ReactDOM.render(<MyGridExistingContent />, document.getElementById('gridExistingContent'));
-ReactDOM.render(<MyResponsiveGridExistingContent />, document.getElementById('gridResponsiveExistingContent'));
+ReactDOM.render(<MyResponsiveGridExistingContent
+    layouts={layouts}
+    breakpoints={breakpoints}
+    cols={cols} />,
+    document.getElementById('gridResponsiveExistingContent'));
 
