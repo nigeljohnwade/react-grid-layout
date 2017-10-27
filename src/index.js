@@ -159,10 +159,19 @@ export class MyGridExistingContent extends React.Component {
 
 export class MyResponsiveGridExistingContent extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = props;
+        this.onLayoutChange = this.onLayoutChange.bind(this);
+    }
+
     onBreakpointChange(newBreakpoint, newCols){
         console.log(newBreakpoint, newCols);
     }
     onLayoutChange(currentLayout, allLayouts) {
+        this.setState(prevState =>({
+            layouts: allLayouts
+        }))
         localStorage.setItem('layouts', JSON.stringify(allLayouts));
     }
     onWidthChange(containerWidth, margin, cols, containerPadding){
@@ -193,7 +202,7 @@ export class MyResponsiveGridExistingContent extends React.Component {
         console.log(layout, oldItem, newItem, placeholder, event, element);
     }
     render() {
-        const { layouts, cols, breakpoints, rowHeight } = this.props;
+        const { layouts, cols, breakpoints, rowHeight } = this.state;
         return (
             <div>
                 <h2>RGL with layout as psuedo-prop and actual content</h2>
