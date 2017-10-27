@@ -193,7 +193,7 @@ export class MyResponsiveGridExistingContent extends React.Component {
         console.log(layout, oldItem, newItem, placeholder, event, element);
     }
     render() {
-        const {layouts, cols, breakpoints} = this.props;
+        const { layouts, cols, breakpoints, rowHeight } = this.props;
         return (
             <div>
                 <h2>RGL with layout as psuedo-prop and actual content</h2>
@@ -204,7 +204,7 @@ export class MyResponsiveGridExistingContent extends React.Component {
                     cols={cols}
                     margin={[10, 10]}
                     containerPadding={[10, 10]}
-                    rowHeight={100}
+                    rowHeight={rowHeight}
                     onDragStart={this.onDragStart}
                     //This produces a lot of events
                     //onDrag={this.onDrag}
@@ -264,7 +264,7 @@ export class MyResponsiveGridExistingContent extends React.Component {
         )
     }
 }
-const layouts = {
+const defaultLayouts = {
     lg: [
         { i: 'a', x: 0, y: 0, w: 6, h: 3, minW: 2, maxW: 6 },
         { i: 'b', x: 6, y: 0, w: 6, h: 3, static: true },
@@ -300,15 +300,24 @@ const layouts = {
         { i: 'd', x: 4, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
         { i: 'e', x: 8, y: 3, w: 4, h: 2, minH: 1, maxH: 3 },
     ],
-}
+};
 const breakpoints = { lg: 940, md: 736, sm: 508, xs: 220, xxs: 0 };
 const cols = { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 };
+const rowHeight = 100;
+let layouts;
+
+if(localStorage.getItem('layouts')){
+    layouts = JSON.parse(localStorage.getItem('layouts'));
+}else{
+    layouts = defaultLayouts;
+}
 //ReactDOM.render(<MyGridConfig />, document.getElementById('gridConfig'));
 //ReactDOM.render(<MyGridInline />, document.getElementById('gridInline'));
 //ReactDOM.render(<MyGridExistingContent />, document.getElementById('gridExistingContent'));
 ReactDOM.render(<MyResponsiveGridExistingContent
     layouts={layouts}
     breakpoints={breakpoints}
-    cols={cols} />,
+    cols={cols} 
+    rowHeight={rowHeight} />,
     document.getElementById('gridResponsiveExistingContent'));
 
